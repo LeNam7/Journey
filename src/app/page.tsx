@@ -1,33 +1,11 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence, useScroll, useSpring, useInView, useTransform } from "framer-motion";
+import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import Lenis from "lenis";
-import {
-  Sparkles,
-  Lightbulb,
-  Compass,
-  Trophy,
-  Flag,
-  Footprints,
-  ArrowRight,
-  Rocket,
-  Mountain,
-  CheckCircle2,
-  Volume2,
-  VolumeX,
-  Clock,
-  ChevronRight,
-  Menu,
-  X,
-  Play,
-  Layers,
-  ArrowUpRight,
-  TrendingUp
-} from "lucide-react";
+import { Volume2 } from "lucide-react";
 
 // Modular Canvas Components
-import { Abstract3DCanvas } from "@/components/canvas/Abstract3DCanvas";
 import { PathMorphCanvas } from "@/components/canvas/PathMorphCanvas";
 
 // Modular Section Components
@@ -41,18 +19,19 @@ import { Stage5Telemetry } from "@/components/sections/Stage5Telemetry";
 import { useAudioEngine } from "@/hooks/useAudioEngine";
 
 // Data Interfaces & Configurations
-import { TaskCard, Checkpoint, PathDetail, StoryMoment } from "@/types";
+import { TaskCard } from "@/types";
 import { checkpointsData as checkpoints, pathsData as paths, storyMomentsData as storyMoments } from "@/data/journeyData";
+
 
 // MAIN WEB PAGE COMPONENT
 // ==========================================
 export default function Home() {
   const [activeCheckpoint, setActiveCheckpoint] = useState<number>(3); // The Challenge
-  const [activePath, setActivePath] = useState<string>("creator");
   const [isScrolled, setIsScrolled] = useState(false);
+
   const [stage2Progress, setStage2Progress] = useState<number>(0.5); // Unified continuous morphing playhead
-  const [activePathSlide, setActivePathSlide] = useState<number>(1); // Stage 3 slide: 1=Creator, 2=Founder, 3=Explorer
   const [stage3Progress, setStage3Progress] = useState<number>(0); // 0→1 continuous morph for Stage 3 background
+
 
   // References for scroll tracking
   const containerRef = useRef<HTMLDivElement>(null);
@@ -239,9 +218,6 @@ export default function Home() {
       if (latest >= 0.47 && latest <= 0.69) {
         const relativeVal = (latest - 0.47) / 0.22; // 0 to 1
         setStage3Progress(relativeVal);
-        const slideIdx = Math.min(Math.floor(relativeVal * 3), 2);
-        const newSlide = slideIdx + 1;
-        if (newSlide !== activePathSlide) setActivePathSlide(newSlide);
       } else if (latest < 0.47) {
         setStage3Progress(0);
       } else if (latest > 0.69) {
@@ -249,7 +225,8 @@ export default function Home() {
       }
     });
     return () => unsubscribe();
-  }, [smoothProgress, activeMoment, activeCheckpoint, activePathSlide]);
+  }, [smoothProgress, activeMoment, activeCheckpoint]);
+
 
   // ==========================================
   // ADVANCED CINEMATIC MOTION MAPPING (PLAYHEAD)
