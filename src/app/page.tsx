@@ -7,6 +7,8 @@ import { Volume2 } from "lucide-react";
 
 // Modular Canvas Components
 import { PathMorphCanvas } from "@/components/canvas/PathMorphCanvas";
+import { StarrySkyCanvas } from "@/components/canvas/StarrySkyCanvas";
+import { Abstract3DCanvas } from "@/components/canvas/Abstract3DCanvas";
 
 // Modular Section Components
 import { Stage1Conception } from "@/components/sections/Stage1Conception";
@@ -26,10 +28,10 @@ import { checkpointsData as checkpoints, pathsData as paths, storyMomentsData as
 // MAIN WEB PAGE COMPONENT
 // ==========================================
 export default function Home() {
-  const [activeCheckpoint, setActiveCheckpoint] = useState<number>(3); // The Challenge
+  const [activeCheckpoint, setActiveCheckpoint] = useState<number>(1); // The Spark (Step 1)
   const [isScrolled, setIsScrolled] = useState(false);
 
-  const [stage2Progress, setStage2Progress] = useState<number>(0.5); // Unified continuous morphing playhead
+  const [stage2Progress, setStage2Progress] = useState<number>(0); // Unified continuous morphing playhead starts at 0
   const [stage3Progress, setStage3Progress] = useState<number>(0); // 0→1 continuous morph for Stage 3 background
 
 
@@ -93,9 +95,9 @@ export default function Home() {
       prev.map(t =>
         t.id === id
           ? {
-              ...t,
-              status: nextStatus,
-              progress: nextStatus === "done" ? 100 : nextStatus === "progress" ? 60 : 0
+               ...t,
+               status: nextStatus,
+               progress: nextStatus === "done" ? 100 : nextStatus === "progress" ? 60 : 0
             }
           : t
       )
@@ -150,7 +152,9 @@ export default function Home() {
       setCardTilt({ x: dx * 15, y: dy * -15 }); // Tilt bounds
     };
     window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
   }, []);
 
   // ==========================================
@@ -232,8 +236,8 @@ export default function Home() {
   // ADVANCED CINEMATIC MOTION MAPPING (PLAYHEAD)
   // ==========================================
   
-  // -- Background styling morph
-  const bgTheme = useTransform(smoothProgress, [0.67, 0.71, 0.90, 0.92], ["#f7f8fa", "#0a0b0d", "#0a0b0d", "#f7f8fa"]);
+  // -- Background styling morph (make it transparent to let starry sky canvas shine through)
+  const bgTheme = "transparent";
   const gridOpacity = useTransform(smoothProgress, [0.67, 0.71, 0.90, 0.92], [0.35, 0.15, 0.15, 0.35]);
 
   // -- Stage 1: HERO ELEMENTS
@@ -318,7 +322,7 @@ export default function Home() {
     <motion.div
       ref={containerRef}
       style={{ backgroundColor: bgTheme }}
-      className="relative min-h-screen w-full overflow-x-hidden font-jakarta text-slate-800 selection:bg-slate-900 selection:text-white transition-colors duration-1000"
+      className="relative min-h-screen w-full overflow-x-hidden font-jakarta text-slate-200 selection:bg-slate-200 selection:text-slate-950 transition-colors duration-1000"
     >
       
       {/* 1. Global scrollspacer elements (1000vh to drive native Lenis mousewheel) */}
@@ -332,8 +336,8 @@ export default function Home() {
           y: mousePosition.y,
           width: cursorHovering ? 64 : 14,
           height: cursorHovering ? 64 : 14,
-          backgroundColor: cursorHovering ? "rgba(15, 23, 42, 0.04)" : "rgba(15, 23, 42, 1)",
-          borderColor: cursorHovering ? "rgba(15, 23, 42, 0.35)" : "rgba(255, 255, 255, 1)",
+          backgroundColor: cursorHovering ? "rgba(255, 255, 255, 0.08)" : "rgba(255, 255, 255, 1)",
+          borderColor: cursorHovering ? "rgba(255, 255, 255, 0.5)" : "rgba(255, 255, 255, 1)",
         }}
         transition={{ type: "spring", stiffness: 450, damping: 28, mass: 0.2 }}
       />
@@ -341,6 +345,29 @@ export default function Home() {
       {/* 3. FIXED VIEWPORT THEATER CANVAS */}
       <div className="fixed inset-0 w-screen h-screen overflow-hidden flex flex-col z-10 select-none">
         
+        {/* Deep Starry Sky Canvas Background */}
+        <StarrySkyCanvas scrollProgress={stagePercent / 100} tilt={cardTilt} />
+
+        {/* Stage 2 Fullscreen 3D Morphing Canvas */}
+        <motion.div
+          style={{ opacity: timelineOpacity }}
+          className="absolute inset-0 pointer-events-none select-none z-0 overflow-hidden"
+        >
+          <div className="w-full h-full opacity-[0.35] md:opacity-[0.45]">
+            <Abstract3DCanvas progress={stage2Progress} tilt={cardTilt} />
+          </div>
+        </motion.div>
+
+        {/* Stage 3 Fullscreen Path Morph Canvas */}
+        <motion.div
+          style={{ opacity: trajectoryOpacity }}
+          className="absolute inset-0 pointer-events-none select-none z-0 overflow-hidden"
+        >
+          <div className="w-full h-full opacity-[0.38] md:opacity-[0.48]">
+            <PathMorphCanvas progress={stage3Progress} />
+          </div>
+        </motion.div>
+
         {/* Structural Blueprint Grid modulated by Scroll Stage */}
         <motion.div
           style={{ opacity: gridOpacity }}
@@ -368,7 +395,7 @@ export default function Home() {
         <header
           className={`w-full z-45 border-b transition-all duration-700 py-4 ${
             isScrolled
-              ? "bg-white/80 border-slate-200/50 backdrop-blur-md shadow-sm"
+              ? "bg-slate-950/70 border-white/10 backdrop-blur-md shadow-sm"
               : "bg-transparent border-transparent"
           }`}
         >
@@ -381,22 +408,22 @@ export default function Home() {
               onMouseLeave={() => setCursorHovering(false)}
               className="flex items-center gap-3 cursor-pointer group"
             >
-              <span className="font-sora text-xl font-bold tracking-widest text-slate-900">
+              <span className="font-sora text-xl font-bold tracking-widest text-white">
                 JOURNEY
               </span>
-              <div className="hidden lg:block w-[1px] h-4 bg-slate-200" />
+              <div className="hidden lg:block w-[1px] h-4 bg-white/10" />
               <span className="hidden lg:block text-[9px] font-mono text-slate-400 tracking-wider">
                 THE SINGLE-STAGE THEATER EXPERIMENT
               </span>
             </div>
 
             {/* Quick playhead snapping links */}
-            <nav className="hidden md:flex items-center gap-10 text-xs font-extrabold uppercase tracking-widest text-slate-500">
+            <nav className="hidden md:flex items-center gap-10 text-xs font-extrabold uppercase tracking-widest text-slate-400">
               <button
                 onClick={() => scrollToStagePercentage(0.0)}
                 onMouseEnter={() => setCursorHovering(true)}
                 onMouseLeave={() => setCursorHovering(false)}
-                className={`hover:text-slate-900 transition-colors cursor-pointer ${stagePercent < 16 ? "text-slate-900 underline underline-offset-4" : ""}`}
+                className={`hover:text-white transition-colors cursor-pointer ${stagePercent < 16 ? "text-white underline underline-offset-4" : ""}`}
               >
                 Concept
               </button>
@@ -404,7 +431,7 @@ export default function Home() {
                 onClick={() => scrollToStagePercentage(0.20)}
                 onMouseEnter={() => setCursorHovering(true)}
                 onMouseLeave={() => setCursorHovering(false)}
-                className={`hover:text-slate-900 transition-colors cursor-pointer ${stagePercent >= 16 && stagePercent < 47 ? "text-slate-900 underline underline-offset-4" : ""}`}
+                className={`hover:text-white transition-colors cursor-pointer ${stagePercent >= 16 && stagePercent < 47 ? "text-white underline underline-offset-4" : ""}`}
               >
                 Timeline Map
               </button>
@@ -412,7 +439,7 @@ export default function Home() {
                 onClick={() => scrollToStagePercentage(0.58)}
                 onMouseEnter={() => setCursorHovering(true)}
                 onMouseLeave={() => setCursorHovering(false)}
-                className={`hover:text-slate-900 transition-colors cursor-pointer ${stagePercent >= 47 && stagePercent < 69 ? "text-slate-900 underline underline-offset-4" : ""}`}
+                className={`hover:text-white transition-colors cursor-pointer ${stagePercent >= 47 && stagePercent < 69 ? "text-white underline underline-offset-4" : ""}`}
               >
                 Trajectories
               </button>
@@ -420,7 +447,7 @@ export default function Home() {
                 onClick={() => scrollToStagePercentage(0.80)}
                 onMouseEnter={() => setCursorHovering(true)}
                 onMouseLeave={() => setCursorHovering(false)}
-                className={`hover:text-slate-900 transition-colors cursor-pointer ${stagePercent >= 69 && stagePercent < 91 ? "text-slate-900 underline underline-offset-4" : ""}`}
+                className={`hover:text-white transition-colors cursor-pointer ${stagePercent >= 69 && stagePercent < 91 ? "text-white underline underline-offset-4" : ""}`}
               >
                 Narrative
               </button>
@@ -428,7 +455,7 @@ export default function Home() {
                 onClick={() => scrollToStagePercentage(0.97)}
                 onMouseEnter={() => setCursorHovering(true)}
                 onMouseLeave={() => setCursorHovering(false)}
-                className={`hover:text-slate-900 transition-colors cursor-pointer ${stagePercent >= 91 ? "text-slate-900 underline underline-offset-4" : ""}`}
+                className={`hover:text-white transition-colors cursor-pointer ${stagePercent >= 91 ? "text-white underline underline-offset-4" : ""}`}
               >
                 Telemetry
               </button>
@@ -442,8 +469,8 @@ export default function Home() {
                 onMouseLeave={() => setCursorHovering(false)}
                 className={`flex items-center justify-center p-2 rounded-lg border transition-all ${
                   audioEnabled
-                    ? "bg-slate-900 border-slate-900 text-white shadow-md"
-                    : "bg-white/60 border-slate-200 text-slate-500 hover:text-slate-900 hover:bg-white"
+                    ? "bg-white border-white text-slate-950 shadow-md"
+                    : "bg-white/10 border-white/10 text-slate-400 hover:text-white hover:bg-white/20"
                 }`}
                 title={audioEnabled ? "Silence mysty space drone" : "Activate reactive cosmic synthesis"}
               >
@@ -454,7 +481,7 @@ export default function Home() {
                 onClick={() => scrollToStagePercentage(0.96)}
                 onMouseEnter={() => setCursorHovering(true)}
                 onMouseLeave={() => setCursorHovering(false)}
-                className="hidden sm:flex items-center justify-center px-4 py-2 border border-slate-900 rounded-full font-bold text-xs uppercase tracking-widest bg-white hover:bg-slate-900 hover:text-white transition-all duration-300"
+                className="hidden sm:flex items-center justify-center px-4 py-2 border border-white/30 rounded-full font-bold text-xs uppercase tracking-widest bg-transparent hover:bg-white hover:text-slate-950 text-slate-200 transition-all duration-300"
               >
                 Sign In
               </button>
@@ -463,7 +490,7 @@ export default function Home() {
                 onClick={() => scrollToStagePercentage(0.30)}
                 onMouseEnter={() => setCursorHovering(true)}
                 onMouseLeave={() => setCursorHovering(false)}
-                className="hidden sm:flex items-center justify-center px-4 py-2 bg-slate-900 text-white rounded-full font-bold text-xs uppercase tracking-widest hover:bg-slate-800 transition-all duration-300"
+                className="hidden sm:flex items-center justify-center px-4 py-2 bg-white text-slate-950 rounded-full font-bold text-xs uppercase tracking-widest hover:bg-slate-100 transition-all duration-300"
               >
                 Get Started
               </button>
@@ -519,15 +546,7 @@ export default function Home() {
               STAGE 3: PATH TRAJECTORIES — SHARED MORPH BG + 3 SLIDES
               ================================================== */}
 
-          {/* ── Persistent full-screen morphing canvas for Stage 3 ── */}
-          <motion.div
-            style={{ opacity: trajectoryOpacity, pointerEvents: "none" }}
-            className="absolute inset-0 z-14"
-          >
-            <div className="w-full h-full opacity-[0.38] md:opacity-[0.48]">
-              <PathMorphCanvas progress={stage3Progress} />
-            </div>
-          </motion.div>
+
 
           {/* --- STAGE 3 SLIDES --- */}
           <Stage3Slides

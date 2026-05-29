@@ -3,7 +3,6 @@ import React from "react";
 import { motion, AnimatePresence, MotionValue } from "framer-motion";
 import { Clock, CheckCircle2 } from "lucide-react";
 import { Checkpoint, TaskCard } from "@/types";
-import { Abstract3DCanvas } from "@/components/canvas/Abstract3DCanvas";
 
 interface Stage2TimelineMapProps {
   checkpoints: Checkpoint[];
@@ -47,25 +46,18 @@ export function Stage2TimelineMap({
       }}
       className="absolute inset-0 flex flex-col justify-center z-15"
     >
-      {/* Full-screen interactive 3D morphing background canvas — truly full viewport */}
-      <div className="absolute inset-0 pointer-events-none select-none z-0 overflow-hidden">
-        <div className="w-full h-full opacity-[0.35] md:opacity-[0.45]">
-          <Abstract3DCanvas progress={stage2Progress} tilt={cardTilt} />
-        </div>
-      </div>
+
 
       {/* All content constrained inside, canvas breaks free above */}
-      <div className="relative z-10 max-w-6xl w-full mx-auto px-6 flex flex-col gap-6">
-
-        {/* Stage 2 Cosmic tech header */}
+      <div className="relative z-10 max-w-6xl w-full mx-auto px-6 flex flex-col gap-6">        {/* Stage 2 Cosmic tech header */}
         <div className="text-center space-y-1 sm:space-y-2 mt-4 select-none">
-          <span className="text-[8px] font-bold uppercase tracking-widest text-slate-500 font-mono">
+          <span className="text-[8px] font-bold uppercase tracking-widest text-slate-400 font-mono">
             STAGE 2: CAPABILITY MATRIX // VERIFICATION PIPELINE
           </span>
-          <h2 className="font-sora text-xl sm:text-2xl font-extrabold tracking-tight text-slate-905">
+          <h2 className="font-sora text-xl sm:text-2xl font-extrabold tracking-tight text-white">
             Scroll-Driven Trajectory Validation
           </h2>
-          <p className="text-slate-500 text-[10px] sm:text-xs font-semibold max-w-xl mx-auto">
+          <p className="text-slate-405 text-[10px] sm:text-xs font-semibold max-w-xl mx-auto">
             Scroll slowly to proceed. The background holographic 3D wireframe continuously morphs its geometric structure and interpolates color.
           </p>
         </div>
@@ -74,13 +66,64 @@ export function Stage2TimelineMap({
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center w-full">
           
           {/* Column 1: Timeline checklist navigator (Left 5 columns) */}
-          <div className="lg:col-span-5 rounded-2xl bg-white/15 backdrop-blur-sm p-5 relative border border-white/30 shadow-sm h-[360px] flex flex-col justify-center overflow-hidden">
-            <div className="absolute left-[39px] sm:left-[49px] top-10 bottom-10 w-[1px] bg-slate-200 z-0" />
-            
-            <motion.div 
-              style={{ height: mapProgressLineHeight }}
-              className="absolute left-[39px] sm:left-[49px] top-10 w-[1.5px] bg-slate-950 z-10 origin-top shadow-[0_0_8px_rgba(15,23,42,0.15)]"
-            />
+          <div className="lg:col-span-5 rounded-2xl bg-slate-950/40 backdrop-blur-md p-5 relative border border-white/10 shadow-xl h-[360px] flex flex-col justify-center overflow-hidden">
+            {/* Wavy Timeline Connector Wire */}
+            <svg 
+              viewBox="0 0 48 280" 
+              preserveAspectRatio="none" 
+              className="absolute left-[15px] sm:left-[25px] top-12 bottom-12 w-[48px] h-[calc(100%-96px)] pointer-events-none z-0 overflow-visible"
+            >
+              <defs>
+                <mask id="wavy-scroll-mask">
+                  <motion.path 
+                    d="M 24,0 C 8,17.5 8,52.5 24,70 C 40,87.5 40,122.5 24,140 C 8,157.5 8,192.5 24,210 C 40,227.5 40,262.5 24,280"
+                    fill="none"
+                    stroke="#ffffff"
+                    strokeWidth="8"
+                    strokeLinecap="round"
+                    pathLength={stage2Progress}
+                  />
+                </mask>
+              </defs>
+
+              {/* Background winding cord (completely black / extremely dark initially) */}
+              <path 
+                d="M 24,0 C 8,17.5 8,52.5 24,70 C 40,87.5 40,122.5 24,140 C 8,157.5 8,192.5 24,210 C 40,227.5 40,262.5 24,280"
+                fill="none" 
+                className="stroke-slate-950/80 stroke-[2px] stroke-linecap-round" 
+              />
+              
+              {/* Active glowing background track (white base under the energy laser) */}
+              <path 
+                d="M 24,0 C 8,17.5 8,52.5 24,70 C 40,87.5 40,122.5 24,140 C 8,157.5 8,192.5 24,210 C 40,227.5 40,262.5 24,280"
+                fill="none"
+                className="stroke-white/20 stroke-[2px] stroke-linecap-round"
+                mask="url(#wavy-scroll-mask)"
+              />
+
+              {/* Active glowing energy pulse (dashes flowing down the scroll-revealed path) */}
+              <path 
+                d="M 24,0 C 8,17.5 8,52.5 24,70 C 40,87.5 40,122.5 24,140 C 8,157.5 8,192.5 24,210 C 40,227.5 40,262.5 24,280"
+                fill="none"
+                className="stroke-white stroke-[2.5px] stroke-linecap-round animate-energy-flow"
+                mask="url(#wavy-scroll-mask)"
+                style={{
+                  strokeDasharray: "15, 20",
+                  filter: "drop-shadow(0 0 5px rgba(255, 255, 255, 0.95))"
+                }}
+              />
+              
+              {/* Cyber cyan outer core glow for supreme space-tech look */}
+              <path 
+                d="M 24,0 C 8,17.5 8,52.5 24,70 C 40,87.5 40,122.5 24,140 C 8,157.5 8,192.5 24,210 C 40,227.5 40,262.5 24,280"
+                fill="none"
+                className="stroke-cyan-400/50 stroke-[4px] stroke-linecap-round"
+                mask="url(#wavy-scroll-mask)"
+                style={{
+                  filter: "blur(2px)"
+                }}
+              />
+            </svg>
 
             <div className="space-y-4 z-10 relative">
               {checkpoints.map((cp) => {
@@ -100,22 +143,22 @@ export function Stage2TimelineMap({
                     onMouseLeave={() => setCursorHovering(false)}
                     className={`group flex items-center gap-4 p-2.5 rounded-xl cursor-pointer transition-all duration-300 border ${
                       isActive
-                        ? "bg-white border-slate-250 shadow-sm scale-[1.02]"
-                        : "hover:bg-white/40 border-transparent"
+                        ? "bg-white/10 border-white/20 shadow-md scale-[1.02]"
+                        : "hover:bg-white/5 border-transparent"
                     }`}
                   >
                     {/* Node Circle */}
                     <div className="relative shrink-0 z-10">
                       {isActive && (
-                        <div className="absolute inset-[-4px] rounded-full border border-slate-900/10 animate-pulse pointer-events-none" />
+                        <div className="absolute inset-[-4px] rounded-full border border-white/20 animate-pulse pointer-events-none" />
                       )}
                       <div
                         className={`h-8 w-8 rounded-full border flex items-center justify-center transition-all text-xs relative overflow-hidden ${
                           isCompleted
-                            ? "bg-slate-900 border-slate-900 text-white shadow-sm"
+                            ? "bg-emerald-500/80 border-emerald-500/80 text-white shadow-md"
                             : isActive
-                            ? "bg-white border-slate-900 text-slate-900 shadow-sm font-bold"
-                            : "bg-slate-100 border-slate-200 text-slate-450"
+                            ? "bg-white border-white text-slate-950 shadow-md font-bold"
+                            : "bg-white/5 border-white/10 text-slate-400"
                         }`}
                       >
                         {/* Number always shown */}
@@ -153,11 +196,11 @@ export function Stage2TimelineMap({
 
                     <div className="flex-1 text-left min-w-0">
                       <h3 className={`font-sora font-bold text-xs truncate transition-colors ${
-                        isActive ? "text-slate-950" : "text-slate-550 group-hover:text-slate-900"
+                        isActive ? "text-white" : "text-slate-400 group-hover:text-white"
                       }`}>
                         {cp.title}
                       </h3>
-                      <span className="text-[8px] font-mono font-bold text-slate-400 block uppercase tracking-wider mt-0.5">
+                      <span className="text-[8px] font-mono font-bold text-slate-500 block uppercase tracking-wider mt-0.5">
                         {isCompleted ? "VERIFIED" : isActive ? "IN PROBE" : "LOCKED"}
                       </span>
                     </div>
@@ -180,22 +223,22 @@ export function Stage2TimelineMap({
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -20 }}
                     transition={{ duration: 0.3 }}
-                    className="rounded-2xl bg-white/15 backdrop-blur-sm border border-white/30 p-5 space-y-4 shadow-sm relative overflow-hidden flex flex-col justify-between h-full"
+                    className="rounded-2xl bg-slate-955/45 backdrop-blur-md border border-white/10 p-5 space-y-4 shadow-xl relative overflow-hidden flex flex-col justify-between h-full"
                   >
-                    <div className="absolute inset-0 blueprint-grid opacity-20 pointer-events-none z-0" />
+                    <div className="absolute inset-0 blueprint-grid opacity-10 pointer-events-none z-0" />
 
                     <div className="space-y-3 z-10 relative">
                       <div className="flex items-center gap-2.5">
-                        <div className="h-7 w-7 rounded-lg bg-slate-900 flex items-center justify-center text-white shrink-0">
+                        <div className="h-7 w-7 rounded-lg bg-white/10 border border-white/10 flex items-center justify-center text-white shrink-0">
                           {cp.icon}
                         </div>
                         <div>
-                          <div className="text-[7px] uppercase font-extrabold tracking-widest text-slate-450 font-mono">SELECTED BLUEPRINT // QUANTUM MATRIX</div>
-                          <h3 className="font-sora text-sm font-extrabold text-slate-950 leading-tight">{cp.title}</h3>
+                          <div className="text-[7px] uppercase font-extrabold tracking-widest text-slate-400 font-mono">SELECTED BLUEPRINT // QUANTUM MATRIX</div>
+                          <h3 className="font-sora text-sm font-extrabold text-white leading-tight">{cp.title}</h3>
                         </div>
                       </div>
 
-                      <p className="text-[10px] sm:text-xs text-slate-655 leading-relaxed bg-[#f8f9fb]/90 p-3.5 rounded-xl border border-slate-100 font-semibold">
+                      <p className="text-[10px] sm:text-xs text-slate-305 leading-relaxed bg-slate-900/60 p-3.5 rounded-xl border border-white/5 font-semibold">
                         {cp.description}
                       </p>
                     </div>
@@ -221,16 +264,16 @@ export function Stage2TimelineMap({
                               onMouseLeave={() => setCursorHovering(false)}
                               className={`flex items-start gap-2 p-2 rounded-lg border transition-all cursor-pointer ${
                                 isDone
-                                  ? "bg-slate-50 border-slate-200 text-slate-400"
-                                  : "bg-white/90 border-slate-200 text-slate-700 hover:border-slate-350 hover:bg-white"
+                                  ? "bg-white/5 border-white/5 text-slate-400"
+                                  : "bg-white/10 border-white/10 text-slate-200 hover:border-white/30 hover:bg-white/20"
                               }`}
                             >
                               <div className={`h-4 w-4 shrink-0 rounded border flex items-center justify-center mt-0.5 transition-colors ${
                                 isDone
-                                  ? "bg-slate-900 border-slate-900 text-white"
-                                  : "border-slate-200 bg-white text-transparent"
+                                  ? "bg-emerald-500 border-emerald-500 text-white"
+                                  : "border-white/20 bg-transparent text-transparent"
                               }`}>
-                                <CheckCircle2 className="h-2.5 w-2.5" />
+                                <CheckCircle2 className="h-2.5 w-2.5 text-white" />
                               </div>
                               <div className="text-[9.5px] font-bold leading-normal flex-1">
                                 <span className={`${isDone ? "line-through" : ""}`}>{task}</span>
@@ -242,13 +285,13 @@ export function Stage2TimelineMap({
                     </div>
 
                     {/* Footer Advances */}
-                    <div className="pt-2.5 border-t border-slate-100 flex items-center justify-between z-10 relative text-[10px] font-bold">
-                      <div className="flex items-center gap-1 text-slate-455">
+                    <div className="pt-2.5 border-t border-white/10 flex items-center justify-between z-10 relative text-[10px] font-bold">
+                      <div className="flex items-center gap-1 text-slate-400">
                         <Clock className="h-3 w-3" />
                         <span>Telemetry:</span>
-                        <span className="text-slate-905 font-mono">+{cp.xpReward} XP</span>
+                        <span className="text-white font-mono">+{cp.xpReward} XP</span>
                       </div>
-                      <span className="text-[8.5px] font-mono text-slate-400 uppercase">
+                      <span className="text-[8.5px] font-mono text-slate-500 uppercase">
                         [{cp.status.toUpperCase()}]
                       </span>
                     </div>
@@ -257,9 +300,7 @@ export function Stage2TimelineMap({
               })}
             </AnimatePresence>
           </div>
-
         </div>
-
       </div>{/* end content wrapper */}
     </motion.div>
   );

@@ -51,7 +51,7 @@ export function Stage4Narrative({
             <path 
               d="M 40 0 C 10 150, 70 300, 40 450 C 10 600, 70 750, 40 900 C 10 1050, 70 1200, 40 1350" 
               fill="none" 
-              className="stroke-slate-800/40 stroke-[3px] stroke-linecap-round" 
+              className="stroke-white/10 stroke-[3px] stroke-linecap-round" 
             />
             
             {/* Active glowing wire path */}
@@ -89,7 +89,7 @@ export function Stage4Narrative({
                   style={{ left: `${nodeX}px` }}
                   className="absolute left-10 md:left-40 w-12 h-12 flex items-center justify-center -translate-x-1/2 -translate-y-1/2 z-20"
                 >
-                  <div className={`w-8 h-8 rounded-full bg-[#0a0b0d] border-2 flex items-center justify-center relative shadow-xl transition-all duration-500 ${isActive ? "border-cyan-400 text-white" : "border-slate-800 text-slate-650"}`}>
+                  <div className={`w-8 h-8 rounded-full bg-[#03020a] border-2 flex items-center justify-center relative shadow-xl transition-all duration-500 ${isActive ? "border-cyan-400 text-white" : "border-white/10 text-slate-500"}`}>
                     <span className="text-[9px] font-mono font-extrabold">
                       0{idx + 1}
                     </span>
@@ -107,20 +107,20 @@ export function Stage4Narrative({
                   className="absolute left-28 md:left-[270px] flex flex-col space-y-2 text-left max-w-xl pr-6 -translate-y-1/2 z-10 pointer-events-auto"
                 >
                   <div>
-                    <span className={`text-[8px] font-mono font-extrabold px-2.5 py-0.5 rounded-full border transition-all duration-500 ${isActive ? mom.accentClass : "bg-transparent border-slate-800 text-slate-500"}`}>
+                    <span className={`text-[8px] font-mono font-extrabold px-2.5 py-0.5 rounded-full border transition-all duration-500 ${isActive ? mom.accentClass : "bg-transparent border-white/10 text-slate-500"}`}>
                       {mom.subtitle}
                     </span>
                   </div>
 
-                  <h3 className={`font-sora text-lg sm:text-xl font-extrabold tracking-tight transition-colors duration-550 ${isActive ? "text-white" : "text-slate-505"}`}>
+                  <h3 className={`font-sora text-lg sm:text-xl font-extrabold tracking-tight transition-colors duration-550 ${isActive ? "text-white" : "text-slate-400"}`}>
                     {mom.title}
                   </h3>
 
-                  <blockquote className={`border-l-2 pl-3 py-0.5 italic text-xs transition-colors duration-550 ${isActive ? "border-cyan-400 text-slate-300 font-medium" : "border-slate-800 text-slate-600"}`}>
+                  <blockquote className={`border-l-2 pl-3 py-0.5 italic text-xs transition-colors duration-550 ${isActive ? "border-cyan-400 text-slate-300 font-medium" : "border-white/10 text-slate-550"}`}>
                     {mom.quote}
                   </blockquote>
 
-                  <p className={`text-[10px] sm:text-xs leading-relaxed font-semibold transition-colors duration-550 ${isActive ? "text-slate-400" : "text-slate-600"}`}>
+                  <p className={`text-[10px] sm:text-xs leading-relaxed font-semibold transition-colors duration-550 ${isActive ? "text-slate-400" : "text-slate-500"}`}>
                     {mom.description}
                   </p>
                 </div>

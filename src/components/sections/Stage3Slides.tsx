@@ -39,26 +39,26 @@ export function Stage3Slides({
         className="absolute inset-0 flex items-center justify-center z-15"
       >
         <div className="max-w-2xl w-full mx-auto px-8">
-          <div className="rounded-2xl bg-white/15 backdrop-blur-sm border border-white/30 p-10 space-y-6 text-left shadow-sm">
+          <div className="rounded-2xl bg-slate-950/40 backdrop-blur-md border border-white/10 p-10 space-y-6 text-left shadow-2xl">
             <div className="space-y-2">
               <span className="text-[8px] font-bold uppercase tracking-widest text-slate-400 font-mono">STAGE 3 · 01/03 // CREATOR ARCHETYPE</span>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-300/60 bg-cyan-500/10 text-[8px] font-extrabold text-cyan-600 font-mono tracking-widest">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-400/30 bg-cyan-400/10 text-[8px] font-extrabold text-cyan-400 font-mono tracking-widest">
                 CREATOR PATH
               </div>
             </div>
-            <h2 className="font-sora text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-950 leading-tight">
+            <h2 className="font-sora text-4xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight">
               {paths.creator.title}
             </h2>
             <p className="text-[9px] font-mono font-extrabold text-slate-400 uppercase tracking-wider">{paths.creator.tagline}</p>
-            <p className="text-slate-600 text-sm font-semibold leading-relaxed">
+            <p className="text-slate-300 text-sm font-semibold leading-relaxed">
               {paths.creator.description}
             </p>
-            <div className="space-y-2 pt-2 border-t border-white/20">
+            <div className="space-y-2 pt-2 border-t border-white/10">
               <h4 className="text-[7.5px] font-mono font-extrabold tracking-widest text-slate-400 uppercase">{paths.creator.actionTitle}</h4>
               {paths.creator.steps.map((step, idx) => (
-                <div key={idx} className="flex items-center gap-3 p-2.5 rounded-lg bg-white/30 border border-white/40">
+                <div key={idx} className="flex items-center gap-3 p-2.5 rounded-lg bg-white/10 border border-white/10">
                   <span className="h-5 w-5 rounded-full bg-cyan-500 text-white flex items-center justify-center text-[9px] font-bold font-mono shrink-0">0{idx+1}</span>
-                  <span className="text-xs font-semibold text-slate-700">{step}</span>
+                  <span className="text-xs font-semibold text-slate-200">{step}</span>
                 </div>
               ))}
             </div>
@@ -76,26 +76,26 @@ export function Stage3Slides({
         className="absolute inset-0 flex items-center justify-center z-15"
       >
         <div className="max-w-2xl w-full mx-auto px-8">
-          <div className="rounded-2xl bg-white/15 backdrop-blur-sm border border-white/30 p-10 space-y-6 text-left shadow-sm">
+          <div className="rounded-2xl bg-slate-950/40 backdrop-blur-md border border-white/10 p-10 space-y-6 text-left shadow-2xl">
             <div className="space-y-2">
               <span className="text-[8px] font-bold uppercase tracking-widest text-slate-400 font-mono">STAGE 3 · 02/03 // FOUNDER ARCHETYPE</span>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-violet-300/60 bg-violet-500/10 text-[8px] font-extrabold text-violet-600 font-mono tracking-widest">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-violet-400/30 bg-violet-400/10 text-[8px] font-extrabold text-violet-400 font-mono tracking-widest">
                 FOUNDER PATH
               </div>
             </div>
-            <h2 className="font-sora text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-950 leading-tight">
+            <h2 className="font-sora text-4xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight">
               {paths.founder.title}
             </h2>
             <p className="text-[9px] font-mono font-extrabold text-slate-400 uppercase tracking-wider">{paths.founder.tagline}</p>
-            <p className="text-slate-600 text-sm font-semibold leading-relaxed">
+            <p className="text-slate-300 text-sm font-semibold leading-relaxed">
               {paths.founder.description}
             </p>
-            <div className="space-y-2 pt-2 border-t border-white/20">
+            <div className="space-y-2 pt-2 border-t border-white/10">
               <h4 className="text-[7.5px] font-mono font-extrabold tracking-widest text-slate-400 uppercase">{paths.founder.actionTitle}</h4>
               {paths.founder.steps.map((step, idx) => (
-                <div key={idx} className="flex items-center gap-3 p-2.5 rounded-lg bg-white/30 border border-white/40">
+                <div key={idx} className="flex items-center gap-3 p-2.5 rounded-lg bg-white/10 border border-white/10">
                   <span className="h-5 w-5 rounded-full bg-violet-500 text-white flex items-center justify-center text-[9px] font-bold font-mono shrink-0">0{idx+1}</span>
-                  <span className="text-xs font-semibold text-slate-700">{step}</span>
+                  <span className="text-xs font-semibold text-slate-200">{step}</span>
                 </div>
               ))}
             </div>
@@ -113,30 +113,30 @@ export function Stage3Slides({
         className="absolute inset-0 flex items-center justify-center z-15"
       >
         <div className="max-w-2xl w-full mx-auto px-8">
-          <div className="rounded-2xl bg-white/15 backdrop-blur-sm border border-white/30 p-10 space-y-6 text-left shadow-sm">
+          <div className="rounded-2xl bg-slate-950/40 backdrop-blur-md border border-white/10 p-10 space-y-6 text-left shadow-2xl">
             <div className="space-y-2">
               <span className="text-[8px] font-bold uppercase tracking-widest text-slate-400 font-mono">STAGE 3 · 03/03 // EXPLORER ARCHETYPE</span>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-emerald-300/60 bg-emerald-500/10 text-[8px] font-extrabold text-emerald-600 font-mono tracking-widest">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-emerald-400/30 bg-emerald-400/10 text-[8px] font-extrabold text-emerald-400 font-mono tracking-widest">
                 EXPLORER PATH
               </div>
             </div>
-            <h2 className="font-sora text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-950 leading-tight">
+            <h2 className="font-sora text-4xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight">
               {paths.explorer.title}
             </h2>
             <p className="text-[9px] font-mono font-extrabold text-slate-400 uppercase tracking-wider">{paths.explorer.tagline}</p>
-            <p className="text-slate-600 text-sm font-semibold leading-relaxed">
+            <p className="text-slate-300 text-sm font-semibold leading-relaxed">
               {paths.explorer.description}
             </p>
-            <div className="space-y-2 pt-2 border-t border-white/20">
+            <div className="space-y-2 pt-2 border-t border-white/10">
               <h4 className="text-[7.5px] font-mono font-extrabold tracking-widest text-slate-400 uppercase">{paths.explorer.actionTitle}</h4>
               {paths.explorer.steps.map((step, idx) => (
-                <div key={idx} className="flex items-center gap-3 p-2.5 rounded-lg bg-white/30 border border-white/40">
+                <div key={idx} className="flex items-center gap-3 p-2.5 rounded-lg bg-white/10 border border-white/10">
                   <span className="h-5 w-5 rounded-full bg-emerald-500 text-white flex items-center justify-center text-[9px] font-bold font-mono shrink-0">0{idx+1}</span>
-                  <span className="text-xs font-semibold text-slate-700">{step}</span>
+                  <span className="text-xs font-semibold text-slate-200">{step}</span>
                 </div>
               ))}
             </div>
-            <div className="flex items-center gap-2 text-slate-400 font-mono text-[8px] font-bold uppercase tracking-widest opacity-70">
+            <div className="flex items-center gap-2 text-slate-400 font-mono text-[8px] font-bold uppercase tracking-widest opacity-75">
               <span className="inline-block h-px w-8 bg-emerald-400 animate-pulse" />
               Connecting to Narrative pathway...
             </div>
